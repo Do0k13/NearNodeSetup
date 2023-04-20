@@ -152,7 +152,7 @@ target/release/neard run
 Command:
 
 ```
-sudo vi /etc/systemd/system/neard.service
+sudo nano /etc/systemd/system/neard.service
 ```
 Paste:
 
@@ -327,14 +327,14 @@ To note, a ping also updates the staking balances for your delegators. A ping sh
 
 ## Steps
 
-Create a new file on /home/<USER_ID>/scripts/ping.sh
+Create a new file on /home/<USER_ID>/nearcore/scripts/ping.sh
 
 ```
 #!/bin/sh
 # Ping call to renew Proposal added to crontab
 
 export NEAR_ENV=mainnet
-export LOGS=/home/<USER_ID>/logs
+export LOGS=/home/<USER_ID>/nearcore/logs
 export POOLID=<full_pool_id>
 export ACCOUNTID=<account_id>
 
@@ -352,20 +352,20 @@ near validators next | grep $POOLID >> $LOGS/all.log
 Create logs folder:
 
 ```
-mkdir $HOME/logs
+mkdir $HOME/nearcore/logs
 ```
 
 Change execute permission for ping.sh file:
 
 ```
-chmod +x $HOME/scripts/ping.sh
+chmod +x $HOME/nearcore/scripts/ping.sh
 ```
 
 Create a new crontab, running every 2 hours:
 
 ```
 crontab -e
-0 */2 * * * sh /home/<USER_ID>/scripts/ping.sh
+0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/ping.sh
 ```
 
 List crontab to see it is running:
@@ -376,7 +376,7 @@ crontab -l
 Review your logs
 
 ```
-cat $HOME/logs/all.log
+cat $HOME/nearcore/logs/all.log
 ```
 
 That is it, now you need to have enough delegated tokens to be an active validator, welcome to decentralized Near Protocol!
