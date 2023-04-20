@@ -340,6 +340,11 @@ To note, a ping also updates the staking balances for your delegators. A ping sh
 Create a new file on /home/<USER_ID>/nearcore/scripts/ping.sh
 
 ```
+nano /home/<USER_ID>/nearcore/scripts/ping.sh
+
+```
+
+```
 #!/bin/sh
 # Ping call to renew Proposal added to crontab
 
@@ -359,6 +364,10 @@ near call $POOLID.pool.f853973.m0 ping '{}' --accountId $ACCOUNTID.testnet --gas
 Create a new file on /home/<USER_ID>/nearcore/scripts/validators.sh
 
 ```
+nano /home/<USER_ID>/nearcore/scripts/ping.sh
+
+```
+```
 #!/bin/sh
 # Ping call to renew Proposal added to crontab
 
@@ -369,10 +378,10 @@ export ACCOUNTID=<ONLY ACCOUNT NAME>
 
 echo "---" >> $LOGS/all.log
 date >> $LOGS/all.log
-near call $POOLID.pool.f853973.m0 ping '{}' --accountId $ACCOUNTID.testnet --gas=300000000000000 >> $LOGS/all.log
-#near proposals | grep $POOLID >> $LOGS/all.log
-#near validators current | grep $POOLID >> $LOGS/all.log
-#near validators next | grep $POOLID >> $LOGS/all.log
+#near call $POOLID.pool.f853973.m0 ping '{}' --accountId $ACCOUNTID.testnet --gas=300000000000000 >> $LOGS/all.log
+near proposals | grep $POOLID >> $LOGS/all.log
+near validators current | grep $POOLID >> $LOGS/all.log
+near validators next | grep $POOLID >> $LOGS/all.log
 
 ```
 Create logs folder:
@@ -392,8 +401,8 @@ Create a new crontab, running every 2 hours:
 
 ```
 crontab -e
-0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/ping.sh
-0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/validators.sh
+0 */6 * * * sh /home/<USER_ID>/nearcore/scripts/ping.sh
+0 */1 * * * sh /home/<USER_ID>/nearcore/scripts/validators.sh
 ```
 
 List crontab to see it is running:
