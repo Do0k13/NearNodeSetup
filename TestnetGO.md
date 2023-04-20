@@ -112,6 +112,15 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/testnet/config.json
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
+```
+chain="testnet"  # or "testnet"
+kind="rpc"       # or "archive"
+aws s3 --no-sign-request cp "s3://near-protocol-public/backups/${chain:?}/${kind:?}/latest" .
+latest=$(cat latest)
+aws s3 sync --delete --no-sign-request  "s3://near-protocol-public/backups/${chain:?}/${kind:?}/${latest:?}" ~/.near/data
+
+```
+
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
