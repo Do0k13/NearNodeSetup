@@ -114,12 +114,12 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
 
-*First install AWS CLI
+* First install AWS CLI
 ```
-$ sudo apt-get install awscli -y
+sudo apt-get install awscli -y
 ```
 
-*Then  download the snapshot using the AWS CLI:
+* Then  download the snapshot using the AWS CLI:
 
 ```
 
