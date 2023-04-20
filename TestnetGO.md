@@ -27,6 +27,7 @@ sudo apt install clang build-essential make
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 Press 1 and press enter
+
 ![img](/images/rust.png)
 
 * Source the environment
