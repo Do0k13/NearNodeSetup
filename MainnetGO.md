@@ -39,11 +39,11 @@ git clone https://github.com/nearprotocol/nearcore.git
 ```
 * Set environment to the latest release tag. For the latest release tag, please check here: https://github.com/near/nearcore/releases.  Note: RC tags are for Testnet only.
 ```
-export NEAR_RELEASE_VERSION=1.30.1
+export NEAR_RELEASE_VERSION=<LASTEST VERSION>
 ```
 ```
 cd nearcore
-git pull
+git pull  #Just for upgrading nearcore version
 git checkout $NEAR_RELEASE_VERSION
 make release
 ```
@@ -107,8 +107,8 @@ target/release/neard init --chain-id="mainnet" --account-id=<full_pool_id>
 * Download the latest genesis and config, if config already exist just delete it and download a new one:
 ```
 cd ~/.near
-rm genesis.json (if exists)
-rm config.json (if exists)
+rm genesis.json # (if exists)
+rm config.json # (if exists)
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/genesis.json
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/config.json
 ```
@@ -343,30 +343,47 @@ Create a new file on /home/<USER_ID>/nearcore/scripts/ping.sh
 
 export NEAR_ENV=mainnet
 export LOGS=/home/<USER_ID>/nearcore/logs
-export POOLID=<full_pool_id>
-export ACCOUNTID=<account_id>
+export POOLID=<ONLY POOL NAME>
+export ACCOUNTID=<ONLY ACCOUNT NAME>
 
 echo "---" >> $LOGS/all.log
 date >> $LOGS/all.log
-
-near call $POOLID ping '{}' --accountId $ACCOUNTID --gas=300000000000000 >> $LOGS/all.log
-
-near proposals | grep $POOLID >> $LOGS/all.log
-near validators current | grep $POOLID >> $LOGS/all.log
-near validators next | grep $POOLID >> $LOGS/all.log
+near call $POOLID.poolv1.near ping '{}' --accountId $ACCOUNTID.near --gas=300000000000000 >> $LOGS/all.log
+#near proposals | grep $POOLID >> $LOGS/all.log
+#near validators current | grep $POOLID >> $LOGS/all.log
+#near validators next | grep $POOLID >> $LOGS/all.log
 
 ```
+Create a new file on /home/<USER_ID>/nearcore/scripts/validators.sh
 
+```
+#!/bin/sh
+# Ping call to renew Proposal added to crontab
+
+export NEAR_ENV=mainnet
+export LOGS=/home/<USER_ID>/nearcore/logs
+export POOLID=<ONLY POOL NAME>
+export ACCOUNTID=<ONLY ACCOUNT NAME>
+
+echo "---" >> $LOGS/all.log
+date >> $LOGS/all.log
+near call $POOLID.poolv1.near ping '{}' --accountId $ACCOUNTID.near --gas=300000000000000 >> $LOGS/all.log
+#near proposals | grep $POOLID >> $LOGS/all.log
+#near validators current | grep $POOLID >> $LOGS/all.log
+#near validators next | grep $POOLID >> $LOGS/all.log
+
+```
 Create logs folder:
 
 ```
 mkdir $HOME/nearcore/logs
 ```
 
-Change execute permission for ping.sh file:
+Change execute permission for ping.sh and validators.sh files:
 
 ```
 chmod +x $HOME/nearcore/scripts/ping.sh
+chmod +x $HOME/nearcore/scripts/validators.sh
 ```
 
 Create a new crontab, running every 2 hours:
@@ -374,6 +391,7 @@ Create a new crontab, running every 2 hours:
 ```
 crontab -e
 0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/ping.sh
+0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/validators.sh
 ```
 
 List crontab to see it is running:
