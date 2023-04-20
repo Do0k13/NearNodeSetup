@@ -112,6 +112,14 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/testnet/config.json
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
+
+* First install AWS CLI
+
+```
+sudo apt-get install awscli -y
+```
+
+* Then  download the snapshot using the AWS CLI:
 ```
 chain="testnet"  # or "testnet"
 kind="rpc"       # or "archive"
