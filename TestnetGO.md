@@ -62,14 +62,14 @@ sudo npm install -g near-cli
 ```
 * Launch this command so set the Near Mainnet Environment:
 ```
-export NEAR_ENV=mainnet
+export NEAR_ENV=testnet
 ```
 * You can also run this command to set the Near testnet Environment persistent:
 ```
-echo 'export NEAR_ENV=mainnet' >> ~/.bashrc
+echo 'export NEAR_ENV=testnet' >> ~/.bashrc
 ```
 #### Step 2 – Create a wallet
-MainNet: https://wallet.near.org/
+Testnet: https://wallet.testnet.near.org/
 
 #### Step 3 – Authorize Wallet Locally
 A full access key needs to be installed locally to be able transactions via NEAR-Cli.
@@ -99,7 +99,7 @@ near login
 #### Step 4 – Initialize & Start the Node
 * From nearcore folder initialize NEAR:
 ```
-target/release/neard init --chain-id="mainnet" --account-id=<full_pool_id>
+target/release/neard init --chain-id="testnet" --account-id=<full_pool_id>
 ```
 **Note that if you want to download blocks faster just stop command after initialization and go further by guide.
 
@@ -108,8 +108,8 @@ target/release/neard init --chain-id="mainnet" --account-id=<full_pool_id>
 cd ~/.near
 rm genesis.json (if exists)
 rm config.json (if exists)
-wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/genesis.json
-wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/mainnet/config.json
+wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/testnet/genesis.json
+wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deploy/testnet/config.json
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
 ##### Create `validator_key.json`
@@ -119,7 +119,7 @@ near generate-key <full_pool_id>
 ```
 * Copy the file generated to Mainnet folder.Make sure to replace YOUR_WALLET by your accountId
 ```
-cp ~/.near-credentials/mainnet/<full_pool_id>.json ~/.near/validator_key.json
+cp ~/.near-credentials/testnet/<full_pool_id>.json ~/.near/validator_key.json
 vi ~/.near/validator_key.json
 ```
 * Edit “account_id” => full_pool_id
@@ -127,7 +127,7 @@ vi ~/.near/validator_key.json
 > Note: The account_id must match the staking pool contract name or you will not be able to sign blocks.
 > File content must be something like :
 > {
->   "account_id": "xxx.poolv1.near",
+>   "account_id": "xxx.pool.f863973.m0",
 >   "public_key": "ed25519:HeaBJ3xLgvZacQWmEctTeUqyfSU4SDEnEwckWxd92W2G",
 >   "secret_key": "ed25519:****"
 > }
@@ -142,7 +142,7 @@ target/release/neard run
 Command:
 
 ```
-sudo vi /etc/systemd/system/neard.service
+sudo nano /etc/systemd/system/neard.service
 ```
 Paste:
 
@@ -317,14 +317,14 @@ To note, a ping also updates the staking balances for your delegators. A ping sh
 
 ## Steps
 
-Create a new file on /home/<USER_ID>/scripts/ping.sh
+Create a new file on /home/<USER_ID>/nearcore/scripts/ping.sh
 
 ```
 #!/bin/sh
 # Ping call to renew Proposal added to crontab
 
-export NEAR_ENV=mainnet
-export LOGS=/home/<USER_ID>/logs
+export NEAR_ENV=testnet
+export LOGS=/home/<USER_ID>/nearcore/logs
 export POOLID=<full_pool_id>
 export ACCOUNTID=<account_id>
 
@@ -342,20 +342,20 @@ near validators next | grep $POOLID >> $LOGS/all.log
 Create logs folder:
 
 ```
-mkdir $HOME/logs
+mkdir $HOME/nearcore/logs
 ```
 
 Change execute permission for ping.sh file:
 
 ```
-chmod +x $HOME/scripts/ping.sh
+chmod +x $HOME/nearcore/scripts/ping.sh
 ```
 
 Create a new crontab, running every 2 hours:
 
 ```
 crontab -e
-0 */2 * * * sh /home/<USER_ID>/scripts/ping.sh
+0 */2 * * * sh /home/<USER_ID>/nearcore/scripts/ping.sh
 ```
 
 List crontab to see it is running:
@@ -366,7 +366,7 @@ crontab -l
 Review your logs
 
 ```
-cat $HOME/logs/all.log
+cat $HOME/nearcore/logs/all.log
 ```
 
 That is it, now you need to have enough delegated tokens to be an active validator, welcome to decentralized Near Protocol!
