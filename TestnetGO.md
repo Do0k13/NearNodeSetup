@@ -416,4 +416,40 @@ Review your logs
 cat $HOME/nearcore/logs/all.log
 ```
 
-That is it, now you need to have enough delegated tokens to be an active validator, welcome to decentralized Near Protocol!
+## IMPROVING SECURITY
+Now we need to install UFW to close all the open ports and only enable the needed ports.
+
+```
+sudo apt install ufw
+```
+
+Then we need to create the following rules to allow the conections:
+NOTE:  Be careful with port 22 or you can lost the SSH access to your server!
+
+```
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22 
+sudo ufw allow 24567
+sudo ufw allow 9090
+```
+
+Now we need to enable the firewall 
+```
+sudo ufw enable
+```
+
+And to watch the status:
+```
+sudo ufw status verbose
+```
+
+
+
+
+
+
+
+
+
+
