@@ -416,6 +416,12 @@ Review your logs
 cat $HOME/nearcore/logs/all.log
 ```
 
+Check for IOPS
+
+```
+curl -sL yabs.sh | bash -s -- -ig
+```
+
 ## IMPROVING SECURITY
 Now we need to install UFW to close all the open ports and only enable the needed ports.
 
