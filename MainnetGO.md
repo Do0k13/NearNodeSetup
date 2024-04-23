@@ -114,22 +114,27 @@ wget -c https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore-deplo
 ```
 * Download the latest snapshot from [the snapshot page](https://near-nodes.io/intro/node-data-snapshots).
 
-* First install AWS CLI
+* First install AWS CLI  and [s5cmd](https://github.com/peak/s5cmd/releases). 
 ```
 sudo apt-get install awscli -y
+curl -sLO https://github.com/peak/s5cmd/releases/download/v2.2.2/s5cmd_2.2.2_linux_amd64.deb && sudo dpkg -i s5cmd_2.2.2_linux_amd64.deb
 ```
 
 * Then  download the snapshot using the AWS CLI:
 
 ```
 
+cd ~/.near
+mkdir data
+cd data
 chain="mainnet"  # or "testnet"
 kind="rpc"       # or "archive"
-aws s3 --no-sign-request cp "s3://near-protocol-public/backups/${chain:?}/${kind:?}/latest" .
-latest=$(cat latest)
-aws s3 sync --delete --no-sign-request  "s3://near-protocol-public/backups/${chain:?}/${kind:?}/${latest:?}" ~/.near/data
+aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/rpc/latest .
+LATEST=$(cat latest)
+s5cmd --no-sign-request sync s3://near-protocol-public/backups/mainnet/rpc/$LATEST/* .
 
 ```
+
 ##### Create `validator_key.json`
 * Generate the Key file:
 ```
