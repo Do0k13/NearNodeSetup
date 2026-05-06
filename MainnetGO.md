@@ -32,10 +32,17 @@ sudo apt install clang build-essential make
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 Press 1 and press enter
+
 ![img](/images/rust.png)
 
 * Source the environment
 ```
+source $HOME/.cargo/env
+```
+* Install NEAR Rust CLI and NEAR-Validator extension
+```
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/near-cli-rs/releases/latest/download/near-cli-rs-installer.sh | sh &&
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near-cli-rs/near-validator-cli-rs/releases/latest/download/near-validator-installer.sh | sh && 
 source $HOME/.cargo/env
 ```
 * Clone the NEARCore Repo
