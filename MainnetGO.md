@@ -1,19 +1,24 @@
 # NEAR Validator Guide🚀
 
-# Definitions
+# Securing the Server
 
-* <pool_id> or pool_id - your pool name, for example nearuaguild
-* <full_pool_id> or full_pool_id - xxx.poolv1.near, where xxx is your pool_id
-* <accountId\> or accountId  - xxx.near where xxx your account name, for example nearukraineguild.near
+For SSH, a public and private key is created on the client. You want to keep both keys secure, especially the private key. 
+```
+ssh-keygen -t ed25519 -a 256
+```
+Now you need to append the public key ~/.ssh/id_ed25519.pub from your client to the ~/.ssh/authorized_keys file on your server. 
+```
+ssh-copy-id user@server
+```
+* Before you start, you might want to ensure your system is up to date.
+```
+sudo apt-get update && sudo apt-get upgrade -y
+```
 
 # Setup using NEARCore
 
 #### Step 1 – Installation required software & set the configuration
 
-* Before you start, you might want to ensure your system is up to date.
-```
-sudo apt update && sudo apt upgrade -y
-```
 * Install Python
 ```
 sudo apt install python3 git curl
