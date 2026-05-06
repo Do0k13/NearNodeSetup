@@ -47,7 +47,7 @@ source $HOME/.cargo/env
 ```
 * Clone the NEARCore Repo
 ```
-git clone https://github.com/nearprotocol/nearcore.git
+cd ~ && git clone https://github.com/near/nearcore && cd nearcore/ && git checkout <VERSION>
 ```
 * Set environment to the latest release tag. For the latest release tag, please check here: https://github.com/near/nearcore/releases.  Note: RC tags are for Testnet only.
 ```
